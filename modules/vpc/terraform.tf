@@ -1,7 +1,3 @@
-provider "aws" {
-  region = var.region
-}
-
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr
 
@@ -33,6 +29,14 @@ resource "aws_subnet" "Private" {
   }
 }
 
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "${var.project}-igw"
+  }
+}
+
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
@@ -52,11 +56,17 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
-resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.main.id
+resource "aws_eip" "nat" {
+    domain = "vpc"
+  
+}
+
+resource "aws_nat_gateway" "nat" {
+    allocation_id = aws_eip.nat.id
+    subnet_id = aws_subnet.Public[0].id
 
   tags = {
-    Name = "${var.project}-igw"
+    Name = "${var.project}-ngw"
   }
 }
 
@@ -78,18 +88,4 @@ resource "aws_route_table_association" "private" {
   count = 3
   subnet_id      = aws_subnet.Private[count.index].id
   route_table_id = aws_route_table.private.id
-}
-
-resource "aws_eip" "nat" {
-    domain = "vpc"
-  
-}
-
-resource "aws_nat_gateway" "nat" {
-    allocation_id = aws_eip.nat.id
-    subnet_id = aws_subnet.Public[0].id
-
-  tags = {
-    Name = "${var.project}-ngw"
-  }
 }
