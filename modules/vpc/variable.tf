@@ -1,19 +1,21 @@
-variable "project" {
+variable "vpc_cidr" {
   type = string
 }
 
-variable "vpc_cidr" {
-    type = string
-}
-
 variable "public_cidr" {
-    type = list
+  type = list(any)
 }
 
 variable "private_cidr" {
-    type = list(string)
+  type = list(string)
 }
 
 variable "availability_zones" {
-    type = list(string)
+  type = list(string)
+}
+
+locals {
+  common_tags = {
+    project = "demo"
+  }
 }
