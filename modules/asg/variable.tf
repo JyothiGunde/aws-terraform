@@ -1,10 +1,3 @@
-variable "project" {
-  type = string
-}
-
-variable "ami" {
-  type = string
-}
 
 variable "instance_type" {
   type = string
@@ -20,4 +13,15 @@ variable "public_subnets_id" {
 
 variable "cidr_block" {
   type = string
+}
+
+variable "ports" {
+  type    = set(string)
+  default = [22, 80]
+}
+
+locals {
+  common_tags = {
+    project = "demo"
+  }
 }
