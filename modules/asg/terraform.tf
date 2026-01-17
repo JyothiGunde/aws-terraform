@@ -35,9 +35,9 @@ resource "aws_launch_template" "lt" {
 
 resource "aws_autoscaling_group" "asg" {
   name                = "${local.common_tags.project}-asg"
-  max_size            = 4
+  max_size            = 5
   min_size            = 1
-  desired_capacity    = 2
+  desired_capacity    = 3
   force_delete        = true
   vpc_zone_identifier = var.public_subnets_id
 
