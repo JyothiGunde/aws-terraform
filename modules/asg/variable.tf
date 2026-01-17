@@ -11,13 +11,12 @@ variable "public_subnets_id" {
   type = list(string)
 }
 
-variable "cidr_block" {
-  type = string
+variable "lb_tg" {
+  type = set(string)
 }
 
-variable "ports" {
-  type    = set(string)
-  default = [22, 80]
+variable "instance_sg" {
+  type = set(string)
 }
 
 locals {

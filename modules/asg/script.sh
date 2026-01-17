@@ -18,7 +18,7 @@ PRIVATE_IP=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" \
 
 #Install amazon-cloudwatch-agent
 yum install amazon-cloudwatch-agent -y
-/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:AmazonCloudWatch-linux -s
+#/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:AmazonCloudWatch-linux -s
 
 # simple static webpage
 cat <<EOF > /var/www/html/index.html

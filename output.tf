@@ -3,6 +3,6 @@ output "vpc_id" {
 }
 
 output "alb" {
-  value = module.asg.alb_dns
+  value = module.lb.alb_dns
 }
 
