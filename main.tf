@@ -18,7 +18,8 @@ module "asg" {
   public_subnets_id = module.vpc.public_subnets_id
   lb_tg             = [module.lb.tg]
   instance_sg       = [module.sgs.instance-sg]
-  iam_role = module.iam.iam_role
+  iam_instance_profile = module.iam.iam_instance_profile
+
 }
 
 module "lb" {

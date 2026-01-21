@@ -44,5 +44,7 @@ resource "aws_iam_role_policy_attachment" "tf_policy_attachment" {
   policy_arn = aws_iam_policy.tf_policy.arn
 }
 
-
-
+resource "aws_iam_instance_profile" "ec2" {
+  name = "tf_iam_instance_profile"
+  role = aws_iam_role.tf_role.name
+}

@@ -19,7 +19,7 @@ variable "instance_sg" {
   type = set(string)
 }
 
-variable "iam_role" {
+variable "iam_instance_profile" {
   type = string
 }
 
