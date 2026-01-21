@@ -30,8 +30,9 @@ jobs:
           aws-region: "us-east-1"
 
       - name: Zip Lambda
-        run: | 
-          zip -r lambda.zip modules/lambda/lambda_function.py
+        run: |
+          cd modules/lambda
+          zip -r ../../lambda.zip
       
       - name: Terraform Init
         run: terraform init
