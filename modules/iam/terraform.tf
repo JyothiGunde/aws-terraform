@@ -1,5 +1,5 @@
-resource "aws_iam_role" "tf_role" {
-  name = "tf_role"
+resource "aws_iam_role" "tf_ec2_role" {
+  name = "tf_ec2_role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -17,7 +17,7 @@ resource "aws_iam_role" "tf_role" {
 }
 
 resource "aws_iam_policy" "tf_policy" {
-  name = "s3-lambda-cloudwatch-ssm_policy"
+  name = "ec2_policy"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -26,7 +26,6 @@ resource "aws_iam_policy" "tf_policy" {
         Effect = "Allow"
         Action = [
             "s3:*",
-            "lambda:*",
             "cloudwatch:*",
             "ssm:*",
             "logs:*",
@@ -42,11 +41,62 @@ resource "aws_iam_policy" "tf_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "tf_policy_attachment" {
-  role = aws_iam_role.tf_role.name
+  role = aws_iam_role.tf_ec2_role.name
   policy_arn = aws_iam_policy.tf_policy.arn
 }
 
 resource "aws_iam_instance_profile" "ec2" {
   name = "tf_iam_instance_profile"
-  role = aws_iam_role.tf_role.name
+  role = aws_iam_role.tf_ec2_role.name
+}
+
+resource "aws_iam_role" "tf_lambda_role" {
+  name = "tf_lambda_role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = "sts:AssumeRole"
+      Principal = {
+        Service = "lambda.amazonaws.com"
+      }
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "tf_lambda_policy" {
+  name = "tf_lambda_policy"
+  role = aws_iam_role.tf_lambda_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "logs:*",
+        "s3:*"
+      ]
+      Resource = "*"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "tf_lambda_policy" {
+  name = "tf_lambda_policy"
+  role = aws_iam_role.tf_lambda_role.id 
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+        Effect = "Allow"
+        Action = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
 }
