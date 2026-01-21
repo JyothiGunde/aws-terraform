@@ -21,11 +21,18 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: "us-east-1"
+      
+      #- name: Create dummy Lambda zip
+      # run: |
+      #  cd modules/lambda
+      #  zip -r lambda.zip lambda_function.py || touch lambda.zip
 
-      - name: Create dummy Lambda zip
+      - name: Ensure Lambda zip exists
         run: |
           cd modules/lambda
+          if [ ! -f lambda.zip ]; then
           zip -r lambda.zip lambda_function.py || touch lambda.zip
+          fi
 
       - name: Terraform Init
         run: terraform init
