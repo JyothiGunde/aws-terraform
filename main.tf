@@ -48,3 +48,15 @@ module "cloudwatchalarm" {
 module "iam" {
   source = "./modules/iam"
 }
+
+module "s3" {
+  source = "./modules/s3"
+  lambda_function = module.lambda.lambda_function
+  lambda_permission = module.lambda.lambda_permission
+}
+
+module "lambda" {
+  source = "./modules/lambda"
+  iam_role = module.iam.iam_role
+  s3_bucket = module.s3.bucket
+}

@@ -29,8 +29,10 @@ resource "aws_iam_policy" "tf_policy" {
             "lambda:*",
             "cloudwatch:*",
             "ssm:*",
+            "logs:*",
             "ssmmessages:*",
-            "ec2messages:*"
+            "ec2messages:*",
+            "ec2:*"
         ]
 
         Resource = "*"
