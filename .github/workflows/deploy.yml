@@ -31,7 +31,7 @@ jobs:
 
       - name: Zip Lambda
         run: | 
-          zip -r lambda.zip lambda_function.py
+          zip -r lambda.zip modules/lambda/lambda_function.py
       
       - name: Terraform Init
         run: terraform init
