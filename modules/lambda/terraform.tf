@@ -4,8 +4,8 @@ resource "aws_lambda_function" "tf_lambda" {
   handler = "lambda_function.lambda_handler"
   runtime = "python3.12"
 
-  filename = "lambda.zip"
-  source_code_hash = filebase64sha256("lambda.zip")
+  filename         = "${path.module}/lambda.zip"
+  source_code_hash = filebase64sha256("${path.module}/lambda.zip")
 
   timeout = 30
 
