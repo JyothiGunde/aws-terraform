@@ -57,6 +57,6 @@ module "s3" {
 
 module "lambda" {
   source = "./modules/lambda"
-  iam_role = module.iam.iam_role
+  iam_role = module.iam.lambda_iam_role
   s3_bucket = module.s3.bucket
 }
