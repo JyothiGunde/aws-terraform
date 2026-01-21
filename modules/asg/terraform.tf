@@ -25,7 +25,7 @@ resource "aws_launch_template" "lt" {
   vpc_security_group_ids = var.instance_sg
   user_data              = filebase64("${path.module}/script.sh")
   iam_instance_profile {
-    name = "CWforEC2"
+    name = var.iam_role
   }
 
   tags = {

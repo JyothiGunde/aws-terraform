@@ -19,6 +19,10 @@ variable "instance_sg" {
   type = set(string)
 }
 
+variable "iam_role" {
+  type = string
+}
+
 locals {
   common_tags = {
     project = "demo"

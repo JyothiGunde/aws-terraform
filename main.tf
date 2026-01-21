@@ -18,6 +18,7 @@ module "asg" {
   public_subnets_id = module.vpc.public_subnets_id
   lb_tg             = [module.lb.tg]
   instance_sg       = [module.sgs.instance-sg]
+  iam_role = module.iam.iam_role
 }
 
 module "lb" {
@@ -41,4 +42,8 @@ module "cloudwatchalarm" {
   source   = "./modules/cloudwatchalarm"
   asg_name = module.asg.asg_name
   sns      = [module.sns.sns]
+}
+
+module "iam" {
+  source = "./modules/iam"
 }
