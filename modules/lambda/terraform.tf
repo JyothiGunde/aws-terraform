@@ -8,7 +8,7 @@ resource "aws_lambda_permission" "permission" {
 
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_file = "${path.root}/lambda_src/handler.py"
+  source_file = "${path.root}/lambda_src/lambda_function.py"
   output_path = "${path.root}/lambda.zip"
 }
 
