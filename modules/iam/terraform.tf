@@ -51,7 +51,7 @@ resource "aws_iam_role_policy_attachment" "cw_agent" {
 }
 
 resource "aws_iam_instance_profile" "ec2" {
-  name = "tf_iam_instance_profile"
+  name = "tf_iam_instance_profile_ec2"
   role = aws_iam_role.tf_ec2_role.name
 }
 
