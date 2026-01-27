@@ -1,5 +1,5 @@
 output "lambda_function" {
-  value = aws_lambda_function.tf_lambda.arn
+  value = aws_lambda_function.function.arn
 }
 
 output "lambda_permission" {

@@ -60,3 +60,7 @@ module "lambda" {
   lambda_iam_role = module.iam.lambda_iam_role
   s3_bucket = module.s3.bucket
 }
+
+module "cloudwatchlogs" {
+  source = "./modules/cloudwatchlogs"
+}
