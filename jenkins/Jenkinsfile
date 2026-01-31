@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_DEFAULT_REGION = "us-east-1"
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                sh 'terraform validate'
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                sh 'terraform plan -var-file=./config/dev/dev.tfvars -out tfplan'
+                stash name: 'tfplan', includes: 'tfplan'
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                unstash 'tfplan'
+                sh 'terraform apply tfplan'
+            }
+        }
+
+        stage('Terraform Destroy') {
+            when {
+                expression { return params.Destroy_Infra == true }
+            }
+
+            steps {
+                sh 'terraform destroy -auto-approve -var-file=./config/dev/dev.tfvars'
+            }
+        }
+    }
+
+    parameters {
+        booleanParam(name: 'Destroy_Infra', defaultValue: false, description: 'set true to destroy infra')
+    }
+}
