@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "bucket" {
-  bucket = "s3-lambda-trigger-bucket-tf"
+  bucket = "s3-lambda-trigger-bucket-terraform"
 }
 
 resource "aws_s3_bucket_notification" "lambda_notification" {
